@@ -16,8 +16,7 @@ systemctl restart sshd
 modprobe br_netfilter
 echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 swapoff -a
-yum update -y
-yum install -y kubelet kubeadm kubectl telnet nfs-utils firewalld ansible yum-utils timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data lvm2 docker
+yum update -y && yum install -y kubelet kubeadm kubectl telnet nfs-utils firewalld ansible yum-utils timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data lvm2 docker
 timedatectl set-timezone America/Sao_Paulo
 export PATH=$PATH:/usr/local/bin
 export NFS_SERVER=192.168.210.10
@@ -26,6 +25,7 @@ echo '${NFS_SERVER}:/bvalab/nfs                 /bvalab/nfs              nfs    
 mkdir -p /etc/docker
 mkdir -p /etc/bvalab ; 
 git clone https://github.com/brunobva/vagrant-ansible.git /etc/bvalab/
+export ANSIBLE_HOST_KEY_CHECKING=False
 ansible-playbook -i /etc/bvalab/Ansible/inventory /etc/bvalab/Ansible/playbook.yml
 systemctl enable firewalld --now
 systemctl enable docker --now
