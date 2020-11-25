@@ -4,7 +4,11 @@
   become: true
 
   environment:
+<<<<<<< HEAD
     PATH: "/usr/local/bin:/sbin:/usr/sbin"
+=======
+    PATH: "usr/local/bin:/sbin:/usr/sbin"
+>>>>>>> 0c0cf04bfabf74dd70291ec40884fd0b853edda0
 
 - name: Creating vault user
   user:
