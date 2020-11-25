@@ -3,6 +3,9 @@
     name: vault
   become: true
 
+  environment:
+    PATH: "/usr/local/bin:/sbin:/usr/sbin"
+
 - name: Creating vault user
   user:
     name: vault
@@ -33,8 +36,8 @@
     src: "{{ vault_download.dest }}"
     dest: /usr/local/bin
     copy: no
-    owner: vault
-    group: vault
+    owner: root 
+    group: root
     mode: 0755
 
 - name: "Set vault binary capabilities"
@@ -42,6 +45,11 @@
     path: /usr/local/bin/vault
     capability: cap_ipc_lock+ep
     state: present
+
+- name: "Create a Vault Config Directory"
+  file:
+    path: /etc/vault.d
+    state: directory
 
 - name: Copy systemd init file
   template:
