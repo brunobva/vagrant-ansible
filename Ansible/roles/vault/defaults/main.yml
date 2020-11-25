@@ -1,0 +1,5 @@
+---
+vault_url: "https://releases.hashicorp.com/vault"
+vault_version: "1.6.0"
+vault_config_path: "/etc/vault.d/vault.hcl"
+nfs_bva_path: "/bvalab/nfs"

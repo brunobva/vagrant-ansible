@@ -1,0 +1,6 @@
+---
+- hosts: 
+  become: yes
+  
+  roles:
+    - vault
