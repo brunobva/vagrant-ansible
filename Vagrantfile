@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
     bvalab001.vm.network :forwarded_port, guest: 8200, host: 8200, id: "vault" , auto_correct: true
     bvalab001.vm.network :forwarded_port, guest: 8500, host: 8500, id: "consul", auto_correct: true
     bvalab001.vm.network :forwarded_port, guest: 2049, host: 2049, id: "nfs", auto_correct: true
-    bvalab001.vm.provision "ansible", ansible.playbook = "./Ansible/playbook.yml"
+    bvalab001.vm.provision "shell", path: "bva-script/bva-init.sh"
     bvalab001.vm.provider "virtualbox" do |vb|
       vb.memory = 1024
       vb.cpus = 2

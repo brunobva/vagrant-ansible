@@ -1,16 +1,6 @@
 echo -e "\n$(date "+%d-%m-%Y --- %T") --- BVALAB config...\n"
 setenforce 0
 sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
-modprobe br_netfilter
-echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
-swapoff -a
-yum update -y
-yum install -y telnet nfs-utils firewalld ansible yum-utils timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data lvm2 docker
-timedatectl set-timezone America/Sao_Paulo
-export NFS_SERVER=192.168.210.10
-mkdir -p /bvalab/nfs ; mount -t nfs -vvvv ${NFS_SERVER}:/bvalab/nfs /bvalab/nfs
-echo '${NFS_SERVER}:/bvalab/nfs                 /bvalab/nfs              nfs          defaults    0       0' >> /etc/fstab
-mkdir -p /etc/docker
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -21,8 +11,22 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
-yum-config-manager --add-repo /etc/yum.repos.d/kubernetes.repo
-yum install -y kubelet kubeadm kubectl
+grep -ir "PasswordAuthentication no" /etc/ssh/sshd_config | sed -i.bak 's/no/yes/g' /etc/ssh/sshd_config
+systemctl restart sshd
+modprobe br_netfilter
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+swapoff -a
+yum update -y
+yum install -y kubelet kubeadm kubectl telnet nfs-utils firewalld ansible yum-utils timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data lvm2 docker
+timedatectl set-timezone America/Sao_Paulo
+export PATH=$PATH:/usr/local/bin
+export NFS_SERVER=192.168.210.10
+mkdir -p /bvalab/nfs ; mount -t nfs -vvvv ${NFS_SERVER}:/bvalab/nfs /bvalab/nfs
+echo '${NFS_SERVER}:/bvalab/nfs                 /bvalab/nfs              nfs          defaults    0       0' >> /etc/fstab
+mkdir -p /etc/docker
+mkdir -p /etc/bvalab ; 
+git clone https://github.com/brunobva/vagrant-ansible.git /etc/bvalab/
+ansible-playbook -i /etc/bvalab/Ansible/inventory /etc/bvalab/Ansible/playbook.yml
 systemctl enable firewalld --now
 systemctl enable docker --now
 systemctl enable kubelet --now
