@@ -1,8 +1,7 @@
-[bvalab]
-192.168.210.11
-192.168.210.12
-192.168.210.10
+[local]
+127.0.0.1
 
-[bvalab:vars]
+[local:vars]
 ansible_user=vagrant
 ansible_password=vagrant
+ansible_host_key_checking=false
