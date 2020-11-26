@@ -1,3 +1,4 @@
+--- 
 # Config SELINUX
 - name: Configuring SELINX
   ansible.posix.selinux:
