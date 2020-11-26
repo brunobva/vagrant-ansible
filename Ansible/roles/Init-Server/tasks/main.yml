@@ -13,7 +13,7 @@
     exclude: kernel*,rundeck, mariadb, mysql*
 # Add repository - Kubernetes
 - name: Add repo K8S
-  yum_repositoriy:
+  yum_repository:
     name: Kubernetes
     description: “K8S Repo”
     baseurl: “https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
