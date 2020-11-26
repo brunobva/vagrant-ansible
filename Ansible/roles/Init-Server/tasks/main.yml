@@ -1,7 +1,7 @@
 --- 
 # Config SELINUX
 - name: Configuring SELINX
-  ansible.posix.selinux:
+  selinux:
     policy: targeted
     state: disabled
 
