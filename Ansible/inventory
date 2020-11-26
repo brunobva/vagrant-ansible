@@ -1,5 +1,7 @@
 [bvalab]
 192.168.210.11
+192.168.210.12
+192.168.210.10
 
 [bvalab:vars]
 ansible_user=vagrant
