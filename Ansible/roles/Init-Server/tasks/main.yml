@@ -1,0 +1,70 @@
+# Config SELINUX
+- name: Configuring SELINX
+  ansible.posix.selinux:
+    policy: targeted
+    state: disabled
+
+# Update Repository
+- name: Upgrade all packages, excluding kernel & foo related packages
+  yum:
+    name: '*'
+    state: latest
+    exclude: kernel*,rundeck, mariadb, mysql*
+# Add repository - Kubernetes
+- name: Add repo K8S
+  yum_repositoriy:
+    name: Kubernetes
+    description: “K8S Repo”
+    baseurl: “https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
+# Add Repository - Rundeck
+
+# Add Repository - Graylog
+
+# Install Some Packages - 
+# kubelet kubeadm kubectl telnet nfs-utils firewalld yum-utils 
+## timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data 
+### lvm2 docker
+- name: Install some packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - epel-release
+    - kubelet
+    - kubeadm
+    - kubectl
+    - htop
+    - docker
+    - curl
+    - unzip
+    - wget
+    - firewalld
+    - nfs-utils
+    - telnet
+    - yum-utils 
+    - device-mapper-persistent-data
+    - git
+    - lvm2
+    - docker
+    
+# Config Timezone
+- name: set system timezone
+  timezone:
+    name: America/Sao_Paulo
+
+# Config SSHD Config
+
+# Disable SWAP
+
+# Mount NFS
+
+# Add NFS entry at /etc/fstab
+
+# Create Directory -- /etc/bvalab
+
+# Restart Daemon
+
+# Open Firewall Ports - 6443,2379,2380,10250,10251,10252,8200,8201,8500 - TCP

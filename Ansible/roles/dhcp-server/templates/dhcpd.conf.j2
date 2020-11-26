@@ -1,0 +1,21 @@
+option domain-name                      "bvalab.local";
+option domain-name-servers              bvalab003.bvalab.local;
+default-lease-time                      86400;
+#max-lease-time                          172800;
+max-lease-time                          -1;
+ddns-update-style                       none;
+one-lease-per-client true;
+authoritative;
+option ntp-servers                      192.168.210.10;
+ignore client-updates;
+allow booting;
+allow bootp;
+allow unknown-clients;
+
+subnet 192.168.210.1 netmask 255.255.255.0 {
+  range 192.168.210.10 192.168.210.200;
+  option domain-name-servers 192.168.210.10;
+  option domain-search "bvalab.local";
+  option subnet-mask 255.255.255.0;
+  option routers 192.168.210.10;
+}
