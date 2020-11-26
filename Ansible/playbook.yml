@@ -1,5 +1,5 @@
 ---
-- hosts: bvalab 
+- hosts: local 
   become: yes
   
   roles:
