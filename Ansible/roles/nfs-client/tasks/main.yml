@@ -1,0 +1,15 @@
+- name: Ensure NFS common is installed.
+  yum: name=nfs-common state=installed update_cache=yes
+
+- name: Create mountable dir
+  file: path=/bvalab/nfs state=directory mode=777 owner=root group=root
+
+- name: set mountpoints
+  mount: mount -t nfs -vvvv {{ nfsserver }}:/bvalab/nfs /bvalab/nfs
+
+- name: Ensure we have our own comment added to /etc/services
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^#VAGRANT-END'
+    insertbefore: '^#VAGRANT-END'
+    line: '{{ nfsserver }}:/bvalab/nfs                 /bvalab/nfs              nfs        defaults    0       0 '

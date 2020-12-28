@@ -6,11 +6,12 @@
     state: disabled
 
 # Update Repository
-- name: Upgrade all packages, excluding kernel & foo related packages
+- name: Upgrade all packages, excluding some packages
   yum:
     name: '*'
     state: latest
     exclude: kernel*,rundeck, mariadb, mysql*
+    
 # Add repository - Kubernetes
 - name: Add repo K8S
   yum_repository:
@@ -20,11 +21,8 @@
     gpgcheck: yes
     enabled: yes
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg
-# Add Repository - Rundeck
 
-# Add Repository - Graylog
-
-# Install Some Packages - 
+    # Install Some Packages - 
 # kubelet kubeadm kubectl telnet nfs-utils firewalld yum-utils 
 ## timedatectl epel-release git curl unzip wget yum-utils device-mapper-persistent-data 
 ### lvm2 docker

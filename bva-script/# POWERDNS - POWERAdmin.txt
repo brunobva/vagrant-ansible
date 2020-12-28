@@ -1,0 +1,36 @@
+# POWERDNS - POWERAdmin
+yum -y install epel-release yum-utils mariadb mariadb-server pdns pdns-backend-mysql bind-utils
+yum-config-manager --enable remi-php72
+systemctl enable mariadb --now
+root
+JMDva93bZdn9GuyH
+create database db_powerdns;
+ grant all privileges on db_powerdns.* to pdns@localhost identified by 'f2K3Hjw72rg5uwEC';
+ flush privileges;
+ cd /etc/pdns/
+ vim pdns.conf
+ #launch=bind
+
+launch=gmysql
+gmysql-host=localhost
+gmysql-user=pdns
+gmysql-password=f2K3Hjw72rg5uwEC
+gmysql-dbname=db_powerdns
+
+# admin user powerdns
+# kswTNC43krr6QmJU
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ ON db_powerdns.*
+ TO 'user'@'localhost'
+ IDENTIFIED BY 'GMjQfd9JqFGjN5Pd';
+
+yum -y install httpd php php-devel php-gd php-imap php-ldap php-mysql php-odbc php-pear php-xml php-xmlrpc php-mbstring php-mcrypt php-mhash gettext
+yum -y install php-pear-DB php-pear-MDB2-Driver-mysqli
+systemctl enable httpd --now
+cd /var/www/html/
+wget http://downloads.sourceforge.net/project/poweradmin/poweradmin-2.1.7.tgz
+tar xvf poweradmin-2.1.7.tgz
+mv poweradmin-2.1.7/ poweradmin/
+firewall-cmd --add-service={http,https} --permanent
+firewall-cmd --reload

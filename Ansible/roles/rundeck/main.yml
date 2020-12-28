@@ -1,0 +1,28 @@
+- name: Remote RPM install with yum
+  yum: 
+    name: http://repo.rundeck.org/latest.rpm
+
+- name: Install some packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - rundeck
+      - java
+
+- name: Upgrade all packages, excluding some packages
+  yum:
+    name: 'rundeck'
+    state: latest
+    exclude: kernel*,rundeck, mariadb, mysql*
+
+- name: Enable service httpd, and not touch the state
+  service:
+    name: rundeckd
+    enabled: yes
+
+- name: Start service httpd, if not started
+  service:
+    name: rundeckd
+    state: started
+    

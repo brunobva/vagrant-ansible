@@ -4,7 +4,7 @@ firewall-cmd --permanent --add-service=nfs ; firewall-cmd --reload
 yum -y install nfs-utils dhcp
 timedatectl set-timezone America/Sao_Paulo
 systemctl enable nfs-server.service --now
-mkdir -pv /bvalab/nfs/{rundeck,ansible,loadbalance,samba,docker,k8s}
+mkdir -pv /bvalab/nfs/{ }
 chown -R nfsnobody:nfsnobody /bvalab/nfs
 chmod 755 -R /bvalab/nfs
 cat <<EOF > /etc/exports

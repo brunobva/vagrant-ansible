@@ -1,0 +1,21 @@
+- name: Create mountable dir
+  file: 
+    path: /bvalab/nfs/{ansible,rundeck,database,consul,vault}
+    state: directory 
+    mode: 777 
+    owner: nfsnobody 
+    group: nfsnobody
+ 
+- name: Ensure NFS utilities are installed.
+  yum: name={{ item }} state=installed update_cache=yes
+    with_items:
+      - nfs-common
+      - nfs-kernel-server
+
+- name: copy /etc/exports
+  template: src=exports.j2 dest=/etc/exports owner=root group=root
+
+- name: restart nfs server
+  service: name=nfs-kernel-server state=restarted
+
+# https://advishnuprasad.com/blog/2016/03/29/setup-nfs-server-and-client-using-ansible/

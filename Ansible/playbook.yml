@@ -1,7 +1,16 @@
 ---
+- hosts: main 
+  become: yes
+
+  roles:
+    - nfs-server
+
 - hosts: local 
   become: yes
   
   roles:
     - Init-Server
+    - nfs-client
+    - rundeck
     - vault
+
